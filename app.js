@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 const width = canvas.clientWidth;
 const height = canvas.clientHeight;
-const cellW = 20;
+const cellW = 1;
 
 const toBinary = (no) => {
   return ("00000000" + (no >>> 0).toString(2)).slice(-8);
@@ -46,17 +46,9 @@ const generate = () => {
     const me = cells[i];
     const right =
       i == cells.length - 1 ? cells[cells.length - 1] : cells[i + 1];
-
-    console.log(
-      `i - 1: ${i - 1} i: ${i} i + 1: ${
-        i + 1
-      }\nleft: ${left} me: ${me} right: ${right}`
-    );
     newGen[i] = parseInt(rules(left, me, right, ruleset));
   }
-  //console.log(cells);
   cells = newGen;
-  console.log(generation);
   generation++;
 };
 
@@ -64,16 +56,14 @@ const draw = () => {
   for (let i = 0; i < cells.length; i++) {
     if (cells[i] == 1) {
       ctx.fillStyle = "black";
-      console.log(cellW * i + " " + generation * i);
-      ctx.fillRect(cellW * i, generation * i, cellW, cellW);
+      ctx.fillRect(cellW * i, generation * cellW, cellW, cellW);
     } else {
       continue;
     }
   }
 };
 
-draw();
-generate();
-
-draw();
-generate();
+while (generation < height / cellW) {
+  draw();
+  generate();
+}
