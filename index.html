@@ -4,22 +4,39 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nebitno</title>
+    <title>Celular automata</title>
   </head>
   <style>
     html,
     body {
       margin: 0;
       padding: 0;
-      background-color: black;
+      background-color: #cccccc;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
     .canvas {
       background-color: white;
       border: 1px solid black;
     }
+
+    .main {
+      display: grid;
+      grid-template-columns: repeat(2, 3fr);
+    }
+
+    #slider {
+      appearance: none;
+      width: 70%;
+    }
   </style>
   <body>
-    <canvas class="canvas" id="canvas" width="1000px" height="600px"></canvas>
+    <main class="main">
+      <canvas class="canvas" id="canvas" width="1000px" height="600px"></canvas>
+      <div>
+        <h2>Rule: <strong id="ruleNo">0</strong></h1>
+        <input type="range" name="slider" id="slider" min="0" max="255" value="0" />
+      </div>
+    </main>
   </body>
   <script src="./app.js"></script>
 </html>

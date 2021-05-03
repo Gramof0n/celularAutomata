@@ -1,9 +1,13 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const ruleLabel = document.getElementById("ruleNo");
+const ruleSlider = document.getElementById("slider");
 
 const width = canvas.clientWidth;
 const height = canvas.clientHeight;
-const cellW = 1;
+const cellW = 5;
+
+let ruleNo = 90;
 
 const toBinary = (no) => {
   return ("00000000" + (no >>> 0).toString(2)).slice(-8);
@@ -35,17 +39,16 @@ const rules = (a, b, c, ruleset) => {
 };
 
 let cells = initCells(new Array(Math.round(width / cellW)));
-const ruleset = generateRulesetFromBinary(toBinary(90));
+let ruleset = generateRulesetFromBinary(toBinary(ruleNo));
 let generation = 0;
 
 const generate = () => {
   const newGen = [];
 
   for (let i = 0; i < cells.length; i++) {
-    const left = i == 0 ? cells[0] : cells[i - 1];
+    const left = i == 0 ? cells[cells.length - 1] : cells[i - 1];
     const me = cells[i];
-    const right =
-      i == cells.length - 1 ? cells[cells.length - 1] : cells[i + 1];
+    const right = i == cells.length - 1 ? cells[0] : cells[i + 1];
     newGen[i] = parseInt(rules(left, me, right, ruleset));
   }
   cells = newGen;
@@ -63,7 +66,29 @@ const draw = () => {
   }
 };
 
-while (generation < height / cellW) {
-  draw();
-  generate();
-}
+const run = () => {
+  while (generation < height / cellW) {
+    draw();
+    generate();
+  }
+};
+
+ruleSlider.oninput = ruleSlider.onkeydown = () => {
+  ruleNo = ruleSlider.value;
+  ruleLabel.innerHTML = ruleNo;
+
+  ruleSlider.onmouseup = onkeyup = () => {
+    cells = initCells(new Array(Math.round(width / cellW)));
+    ruleset = generateRulesetFromBinary(toBinary(ruleNo));
+    generation = 0;
+    console.log(ruleNo);
+    console.log("goreder");
+    run();
+  };
+};
+
+ruleSlider.onmousedown = onkeydown = () => {
+  ctx.clearRect(0, 0, width, height);
+};
+
+//run();
