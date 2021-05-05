@@ -5,7 +5,7 @@ const ruleSlider = document.getElementById("slider");
 
 const width = canvas.clientWidth;
 const height = canvas.clientHeight;
-const cellW = 5;
+const cellW = 10;
 
 let ruleNo = 90;
 
@@ -90,5 +90,3 @@ ruleSlider.oninput = ruleSlider.onkeydown = () => {
 ruleSlider.onmousedown = onkeydown = () => {
   ctx.clearRect(0, 0, width, height);
 };
-
-//run();
